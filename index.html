@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Weather</title>
+
+    <link rel="stylesheet" href="weather.css" />
+
+    <!-- favicon  -->
+    <link id="favicon" rel="icon" href="Images/sun.png" />
+    <!-- font awesome  -->
+    <script
+      src="https://kit.fontawesome.com/b78a585d56.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav id="nav">
+      <form class="left form">
+        <input type="text" placeholder="Type your location" id="location" />
+        <input type="submit" value="Search" />
+      </form>
+
+      <div class="right">
+        <i class="sun-icon fa-solid fa-sun"></i>
+        <button>Differnet Weather ?</button>
+        <button>Metric: °C, m/s</button>
+        <button>Imperial: °F, mph</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="weather-data"></div>
+
+      <div class="map">
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe
+              id="gmap_canvas"
+              src="https://maps.google.com/maps?q=chavadinada&t=k&z=1&ie=UTF8&iwloc=&output=embed"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+            ></iframe
+            ><a href="https://123movies-to.org">123 movies</a><br />
+            <a href="https://www.embedgooglemap.net"
+              >put google maps on your website</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="forcast-title">
+        Next 7 days weather forcast
+    </div>
+
+
+    <div class="forcast">
+    </div>
+
+    <script src="weather.js"></script>
+  </body>
+</html>
+
+
