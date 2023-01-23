@@ -15,20 +15,28 @@
       src="https://kit.fontawesome.com/b78a585d56.js"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
-    <nav id="nav">
+    <nav id="nav" class="nav-class">
       <form class="left form">
         <input type="text" placeholder="Type your location" id="location" />
         <input type="submit" value="Search" />
       </form>
 
-      <div class="right">
+      <div class="right" id="right-id">
         <i class="sun-icon fa-solid fa-sun"></i>
         <button>Differnet Weather ?</button>
         <button>Metric: °C, m/s</button>
         <button>Imperial: °F, mph</button>
       </div>
+      <!-- <a href="" class="icon" >
+        <i class="fa fa-bars"></i>
+
+      </a> -->
     </nav>
 
     <div class="container">
@@ -54,16 +62,10 @@
       </div>
     </div>
 
-    <div class="forcast-title">
-        Next 7 days weather forcast
-    </div>
+    <div class="forcast-title">Next 7 days weather forcast</div>
 
-
-    <div class="forcast">
-    </div>
+    <div class="forcast"></div>
 
     <script src="weather.js"></script>
   </body>
 </html>
-
-

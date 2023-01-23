@@ -19,7 +19,6 @@ function findUserLocation() {
     let latitude = crd.latitude;
     let longitude = crd.longitude;
     let accuracy = crd.accuracy;
-    console.log(latitude, longitude, accuracy, " latitude");
 
     let userCurrentPosition = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=0c8ad3128f981928e8934de5e0264b44`;
 
@@ -28,7 +27,6 @@ function findUserLocation() {
       if (res.status == 200) {
         let jsonFormat = await res.json();
         let location = jsonFormat.name;
-        console.log(location, "current");
         displayWeather(location);
       }
     }
@@ -143,7 +141,7 @@ async function showForcast(location) {
 
       let iconLink =
         "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-      console.log(iconLink, "icon");
+      
 
       index = index + i;
       if (index > 6) {
@@ -154,13 +152,17 @@ async function showForcast(location) {
 
       let day = days[index];
 
-      let forcastStructure = `<div>
-            <h3>${day}</h3>
-            <img src="${iconLink}" alt="icon">
-            <h2>${temp} °C</h2>
-        </div>  `;
+      let divf = document.createElement("div");
+      let h3f = document.createElement("h3");
+      let imgf = document.createElement("img");
+      let h2f = document.createElement("h2");
 
-      forcastContainer.innerHTML += forcastStructure;
+      h3f.textContent = day;
+      h2f.textContent = temp+" °C";
+      imgf.setAttribute("src",iconLink);
+
+      divf.append(h3f, imgf, h2f);
+      forcastContainer.append(divf);
     }
   } catch (err) {
     console.log(err, " forcast error");
@@ -173,4 +175,28 @@ function changeMapLocation(location) {
     "https://maps.google.com/maps?q=" +
     location +
     "&t=&z=13&ie=UTF8&iwloc=&output=embed";
+}
+
+
+
+// responsiveness
+// let hamburgerIcon = document.querySelector(".icon");
+// hamburgerIcon.onclick = function (){
+//   let rightSec = document.querySelector("#right-id");
+
+//   rightSec.setAttribute("id", "drop-down");
+
+//   alert(rightSec.id)
+//   if (rightSec.className === "right" || rightSec.className === "right drop-down"){
+//   }else {
+//     // alert(rightSec.className)
+//     // rightSec.className = "right";
+//   }
+
+// }
+
+let hamburgerIcon = document.querySelector(".icon");
+hamburgerIcon.onclick = function (){
+  let rightSec = document.querySelector("#right-id");
+  rightSec.classList.toggle("drop-down");
 }
