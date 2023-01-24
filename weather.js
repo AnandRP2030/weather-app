@@ -2,6 +2,8 @@ window.onload = function () {
   findUserLocation();
 };
 
+var globalLocation;
+
 // current location
 function findUserLocation() {
   const options = {
@@ -27,7 +29,8 @@ function findUserLocation() {
       if (res.status == 200) {
         let jsonFormat = await res.json();
         let location = jsonFormat.name;
-        displayWeather(location);
+        globalLocation = location;
+        displayWeather(location, units);
       }
     }
 
@@ -37,11 +40,13 @@ function findUserLocation() {
   navigator.geolocation.getCurrentPosition(findLocation, error, options);
 }
 
+var units = "&units=metric";
+
 let form = document.querySelector(".form");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  let location = document.querySelector("#location").value;
+  var location = document.querySelector("#location").value;
   // convert location
   location = location.replace(/\b[a-z]/gi, function (c) {
     return c.toUpperCase();
@@ -50,24 +55,67 @@ form.addEventListener("submit", function (e) {
   if (!location) {
     alert("Enter Location");
   } else {
-    displayWeather(location);
+    globalLocation = location;
+    displayWeather(location, units);
   }
 });
 
-async function displayWeather(location) {
+let kelvinBtn = document.querySelector(".kelvin");
+let fahrenheitBtn = document.querySelector(".fahrenheit");
+let celsiusBtn = document.querySelector(".celsius");
+
+kelvinBtn.onclick = function () {
+  kelvinBtn.style.backgroundColor = "white";
+  celsiusBtn.style.backgroundColor = "#eee";
+  fahrenheitBtn.style.backgroundColor = "#eee";
+
+  units = "";
+  displayWeather(globalLocation, units);
+};
+
+celsiusBtn.onclick = function () {
+  celsiusBtn.style.backgroundColor = "white";
+  fahrenheitBtn.style.backgroundColor = "#eee";
+  units = "&units=metric";
+  displayWeather(globalLocation, units);
+};
+
+fahrenheitBtn.onclick = function () {
+  units = "&units=imperial";
+  fahrenheitBtn.style.backgroundColor = "white";
+  kelvinBtn.style.backgroundColor = "#eee";
+  celsiusBtn.style.backgroundColor = "#eee";
+
+  displayWeather(globalLocation, units);
+};
+
+async function displayWeather(location, units) {
   try {
-    let locationWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0c8ad3128f981928e8934de5e0264b44&units=metric`;
+    let locationWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0c8ad3128f981928e8934de5e0264b44${units}`;
     let res = await fetch(locationWeatherUrl);
     let jsonData = await res.json();
 
     if (res.status == 200) {
       changeMapLocation(location);
-      showForcast(location);
+      showForcast(location, units);
 
       let tempC = jsonData.main.temp;
+
       let minTempC = jsonData.main.temp_min;
       let maxTempC = jsonData.main.temp_max;
       let feelsLike = jsonData.main.feels_like;
+
+      if (units == "&units=imperial") {
+        feelsLike += " °F";
+        tempC += " °F";
+      } else if (units == "") {
+        feelsLike += " K";
+        tempC += " K";
+      } else {
+        feelsLike += " °C";
+        tempC += " °C";
+      }
+
       let mainSituation = jsonData.weather[0].main;
       let situation = jsonData.weather[0].description;
       let windSpeed = jsonData.wind.speed;
@@ -94,11 +142,13 @@ async function displayWeather(location) {
 
         <div class="temp-div">
             <img src="${iconLink}" alt="icon">
-            <h3>${tempC} °C</h3>
+            <h3>${tempC}</h3>
         </div>
 
         <div class="feels-like">
-            <p>${feelsLike} °C</p>
+          
+
+            <p>${feelsLike} </p>
             <p>${mainSituation}</p>
             <p> ${situation}</p>
         </div>
@@ -123,13 +173,12 @@ async function displayWeather(location) {
   }
 }
 
-async function showForcast(location) {
+async function showForcast(location, units) {
   try {
     let forcastContainer = document.querySelector(".forcast");
     forcastContainer.innerHTML = "";
 
-    let forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0c8ad3128f981928e8934de5e0264b44&units=metric`;
-
+    let forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0c8ad3128f981928e8934de5e0264b44${units}`;
     let res = await fetch(forcastUrl);
     let jsonData = await res.json();
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -141,7 +190,6 @@ async function showForcast(location) {
 
       let iconLink =
         "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
-      
 
       index = index + i;
       if (index > 6) {
@@ -158,10 +206,19 @@ async function showForcast(location) {
       let h2f = document.createElement("h2");
 
       h3f.textContent = day;
-      h2f.textContent = temp+" °C";
-      imgf.setAttribute("src",iconLink);
 
+      if (units == "&units=imperial") {
+        temp += " °F";
+      } else if (units == "") {
+        temp += " K";
+      } else {
+        temp += " °C";
+      }
+
+      h2f.textContent = temp;
+      imgf.setAttribute("src", iconLink);
       divf.append(h3f, imgf, h2f);
+      divf.setAttribute("class", "forcast-cards");
       forcastContainer.append(divf);
     }
   } catch (err) {
@@ -177,26 +234,36 @@ function changeMapLocation(location) {
     "&t=&z=13&ie=UTF8&iwloc=&output=embed";
 }
 
+//DARK MODE
+let sunIcon = document.querySelector(".sun-icon");
+sunIcon.addEventListener("click", function () {
+  let body = document.body;
+  body.classList.toggle("container-darkmode");
 
+  let nav = document.querySelector("#nav");
 
-// responsiveness
-// let hamburgerIcon = document.querySelector(".icon");
-// hamburgerIcon.onclick = function (){
-//   let rightSec = document.querySelector("#right-id");
+  nav.classList.toggle("nav-dark");
 
-//   rightSec.setAttribute("id", "drop-down");
+  let container = document.querySelector(".container");
+  container.classList.toggle("container-darkmode");
 
-//   alert(rightSec.id)
-//   if (rightSec.className === "right" || rightSec.className === "right drop-down"){
-//   }else {
-//     // alert(rightSec.className)
-//     // rightSec.className = "right";
-//   }
+  let wethData = document.querySelector(".weather-data");
+  wethData.classList.toggle("weather-darkmode");
 
-// }
+  let forcast = document.querySelector(".forcast");
+  forcast.classList.toggle("container-darkmode");
+  forcast.classList.toggle("forcast-darkmode");
 
-let hamburgerIcon = document.querySelector(".icon");
-hamburgerIcon.onclick = function (){
-  let rightSec = document.querySelector("#right-id");
-  rightSec.classList.toggle("drop-down");
-}
+  let forcastTitle = document.querySelector(".forcast-title");
+  forcastTitle.classList.toggle("container-darkmode");
+  forcastTitle.classList.toggle("forcast-title-darkmode");
+
+  let allCards = document.querySelectorAll(".forcast-cards");
+
+  let subBtn = document.querySelector(".submit-btn");
+  subBtn.classList.toggle("white-border");
+
+  for (let i of allCards) {
+    i.classList.toggle("card-dark");
+  }
+});

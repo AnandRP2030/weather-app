@@ -4,13 +4,16 @@ body {
 }
 #nav {
   height: 100px;
-  background-color: #f2f2f2;
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 30px 5%;
   box-sizing: border-box;
-  overflow:hidden;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.nav-class {
+  background-color: #eee;
 }
 
 .left {
@@ -41,12 +44,12 @@ body {
 
 .right {
   height: 50px;
-  width: 40%;
+  width: 49%;
   display: flex;
   justify-content: space-around;
 }
 
-.sun-icon {
+.right .sun-icon {
   color: rgb(255, 0, 0);
   font-size: 1.2rem;
   cursor: pointer;
@@ -56,14 +59,17 @@ body {
   height: 34px;
   border-radius: 10px;
   border: none;
-  width: 26%;
+  width: 20%;
   cursor: pointer;
+  border: 1px solid rgb(212, 208, 208);
 }
+
 #right-id:first-child {
   background-color: #ececed;
 }
 
 #right-id > button:nth-child(2) {
+  width: 25%;
   background-color: #eee;
 }
 
@@ -138,14 +144,14 @@ body {
   margin-left: 60px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-} 
+}
 
 /* inbuilt map syles  */
 .mapouter {
   position: relative;
   text-align: right;
   height: 250px;
-  width:100%;
+  width: 100%;
 }
 iframe {
   width: 100%;
@@ -155,7 +161,7 @@ iframe {
   overflow: hidden;
   background: none !important;
   height: 250px;
-  width:100%;
+  width: 100%;
 }
 
 #gmap_canvas {
@@ -163,144 +169,189 @@ iframe {
   height: 500;
 }
 
-
 /* forcast  */
-.forcast-title{
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    font-weight: 700;
-    color: black;
-    text-shadow: 2px 2px #f6a9ec;
-    
-  }
-  
-  
-  .forcast {
-    /* height: 200px; */
-    width: 100%;
-    overflow-x:auto;
-    display: grid;
-    grid-template-columns:repeat(8, 1fr);
-    gap: 20px;
-    padding: 10px 7%;
-    box-sizing: border-box;
-    padding: 5px 5%;
-
+.forcast-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: black;
+  text-shadow: 2px 2px #f6a9ec;
 }
 
-.forcast>div{
-    width: 120px;
-    height: 170px;
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 13px;
-    box-sizing: border-box;
-    background-color: #f6a9ec;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  }
-  
-  .forcast h3, .forcast h2{
-    text-align: center;
-    font-size:1.2rem;
-  }
-  
-  /* .forcast h2{
-    
-    font-size:.8rem;
-}
-.forcast h3{
-  font-size:1rem;
-} */
-
-.forcast>div>img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    /* width: 65px; */
-    width: 65%;
+.forcast {
+  /* height: 200px; */
+  width: 100%;
+  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20px;
+  padding: 10px 7%;
+  box-sizing: border-box;
+  padding: 5px 5%;
 }
 
-
-
-.forcast>div *{
-    margin: 0;
+.forcast > div {
+  width: 120px;
+  height: 170px;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 13px;
+  box-sizing: border-box;
+  background-color: #f6a9ec;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.forcast h3,
+.forcast h2 {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.forcast > div > img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+}
+
+.forcast > div * {
+  margin: 0;
+}
 
 /* responsive navbar  */
-.icon{
+.icon {
   display: none;
 }
 
+/* darkmode  */
 
-@media screen and (max-width: 1000px){
-  
-  .right{
+.nav-dark {
+  background-color: black;
+  border-bottom: 1px solid white;
+}
+
+.white-border {
+  border: 1px solid white;
+}
+
+.container-darkmode {
+  background-color: black;
+  color: white;
+}
+
+.weather-darkmode {
+  border: 1px solid white;
+  color: white;
+}
+
+.forcast-darkmode {
+  top: 50px;
+  position: relative;
+  border: 1px solid white;
+}
+
+.forcast-title-darkmode {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.card-dark {
+  background-color: #a9b7f6;
+}
+
+@media screen and (max-width: 1000px) {
+  #nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 120px;
+    padding: 0;
+  }
+
+  .right .sun-icon {
+    margin-top: 18px;
+  }
+
+  .right {
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+    width: 80%;
+    justify-content: space-around;
+  }
+  #right-id > button:nth-child(2) {
     display: none;
   }
 
-  .icon{
+  #right-id > button {
+    width: 25%;
+    margin: auto;
+  }
+
+  .icon {
     display: block;
     font-size: 1.3rem;
     margin-top: 14px;
     margin-right: 8px;
   }
 
-  .drop-down{
+  .drop-down {
     float: none;
     display: block;
     text-align: left;
-    background-color:red;
+    background-color: red;
   }
 
-  .left{
-    width:80%;
-    margin:auto;
+  .left {
+    width: 80%;
+    margin: auto;
   }
 
-  .left>input[type="submit"]{
+  .left > input[type="submit"] {
     width: 30%;
   }
 
-  .left>input[type="text"]{
+  .left > input[type="text"] {
     height: 31px;
   }
 
-  .container{
-    display:grid;
+  .container {
+    display: grid;
     grid-template-columns: 1fr;
     height: auto;
   }
-  .weather-data{
+  .weather-data {
     width: 70%;
     margin: auto;
     height: auto;
   }
 
-  .map{
-    margin:auto;
-    margin-top:25px;
-    width:70%;
+  .map {
+    margin: auto;
+    margin-top: 25px;
+    width: 70%;
   }
 
-  .forcast-title{
-    margin-top:50px;
+  .forcast-title {
+    margin-top: 50px;
   }
-  
-
 }
 
-@media screen and (max-width: 700px){
-  .weather-data{
+@media screen and (max-width: 700px) {
+  .weather-data {
     width: 90%;
     margin: auto;
   }
 
-  .map{
-    margin:auto;
-    margin-top:25px;
-    width:90%;
+  #right-id > button {
+    width: 20%;
+    margin: auto;
+  }
+
+  .map {
+    margin: auto;
+    margin-top: 25px;
+    width: 90%;
   }
 }
