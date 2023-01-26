@@ -1,6 +1,6 @@
 # Weather-app
 ### This is a simple weather application where you can search for weather in major cities.
-
+## Live Demo => https://anandrp2030.github.io/weather-app/
 ## Features
 ### 1. App is Responsive 
 ### 2. Dark mode available
