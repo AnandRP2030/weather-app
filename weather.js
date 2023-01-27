@@ -183,10 +183,12 @@ async function showForcast(location, units) {
     let jsonData = await res.json();
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let date = new Date();
-    let index = date.getDay();
-
+    //  alert(date.getDay())
+    
+    
     for (let i = 0; i < 8; i++) {
       let weatherIcon = jsonData.list[i].weather[0].icon;
+      let index = date.getDay();
 
       let iconLink =
         "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
